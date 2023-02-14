@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import RepoDetails from "./RepoDetails";
 import axios from "axios";
-import "./App.css";
 
 function App() {
   const [username, setUername] = useState("");
   const [loading, setLoading] = useState(false);
   const [repos, setRepos] = useState([]);
+  const [details, setDetails] = useState({});
+  const [detailsLoading, setDetailsLoading] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,17 +28,25 @@ function App() {
 
   function renderRepo(repo) {
     return (
-      <div key={repo.id}>
-        <a className="repo-name" href={repo.url}>
-          {repo.name}
-        </a>
-        <h2 className="repo-name">{repo.id}</h2>
+      <div onClick={() => getDetails(repo.name)} key={repo.id}>
+        <h2 className="repo-name">{repo.name}</h2>
       </div>
     );
   }
 
+  function getDetails(repoName) {
+    setDetailsLoading(true);
+    axios({
+      method: "GET",
+      url: `https:api.github.com/users/${username}/${repoName}`,
+    }).then((res) => {
+      setDetailsLoading(false);
+      setDetails(res.data);
+    });
+  }
+
   return (
-    <div>
+    <div className="page">
       <div className="container">
         <div>
           <form>
@@ -52,6 +62,7 @@ function App() {
           </form>
           <div>{repos.map(renderRepo)}</div>
         </div>
+        <RepoDetails details={details} loading={detailsLoading} />
       </div>
     </div>
   );
