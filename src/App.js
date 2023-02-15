@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RepoDetails from "./RepoDetails";
 import axios from "axios";
 
@@ -8,6 +8,11 @@ function App() {
   const [repos, setRepos] = useState([]);
   const [details, setDetails] = useState({});
   const [detailsLoading, setDetailsLoading] = useState(false);
+
+  useEffect(() => {
+    setRepos([]);
+    setDetails({});
+  }, [username]);
 
   function handleSubmit(e) {
     e.preventDefault();
