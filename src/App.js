@@ -4,7 +4,7 @@ import "./App.css";
 import axios from "axios";
 
 function App() {
-  const [username, setUername] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [repos, setRepos] = useState([]);
   const [details, setDetails] = useState({});
@@ -60,7 +60,7 @@ function App() {
               className="input"
               value={username}
               placeholder="Enter Github username"
-              onChange={(e) => setUername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <button className="button" onClick={handleSubmit}>
               {loading ? "Searching...." : "Search user"}
