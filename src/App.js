@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import RepoDetails from "./RepoDetails";
+import "./App.css";
 import axios from "axios";
 
 function App() {
@@ -27,13 +28,13 @@ function App() {
     }).then((res) => {
       setLoading(false);
       setRepos(res.data);
-      console.log(res.data);
+      console.log("repo data:", res.data);
     });
   }
 
   function renderRepo(repo) {
     return (
-      <div onClick={() => getDetails(repo.name)} key={repo.id}>
+      <div className="row" onClick={() => getDetails(repo.name)} key={repo.id}>
         <h2 className="repo-name">{repo.name}</h2>
       </div>
     );
@@ -52,9 +53,9 @@ function App() {
 
   return (
     <div className="page">
-      <div className="container">
-        <div>
-          <form>
+      <div className="landing-page-container">
+        <div className="repos-list">
+          <form className="form">
             <input
               className="input"
               value={username}
@@ -65,6 +66,7 @@ function App() {
               {loading ? "Searching...." : "Search user"}
             </button>
           </form>
+
           <div>{repos.map(renderRepo)}</div>
         </div>
         <RepoDetails details={details} loading={detailsLoading} />
